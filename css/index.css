@@ -89,21 +89,21 @@ margin-top:30px;
  padding-bottom:45px;
  }
 .info_1i{
- background-image: url(https://static.dezeen.com/uploads/2016/02/Kki-Sweets-and-The-Little-Drom-Store-by-Produce-Workshop_dezeen_08.jpg);
- background-position:center;
+  background-image: url(https://static.dezeen.com/uploads/2016/02/Kki-Sweets-and-The-Little-Drom-Store-by-Produce-Workshop_dezeen_08.jpg);
+  background-position:center;
   transform: rotate(-15deg);
  }
 .info_1i:hover{
   transform: rotate(0deg);
  }
 .info_1io{
- background-image: url(https://mexico-now.com/wp-content/uploads/2023/03/manu.jpg);
+  background-image: url(https://mexico-now.com/wp-content/uploads/2023/03/manu.jpg);
   background-position:center;
  }
 .info_1io1{
- background-image: url(https://media.istockphoto.com/id/1293762741/photo/modern-living-room-interior-3d-render.jpg?s=612x612&w=0&k=20&c=iZ561ZIXOtPYGSzqlKUnLrliorreOYVz1pzu8WJmrnc=);
+  background-image: url(https://media.istockphoto.com/id/1293762741/photo/modern-living-room-interior-3d-render.jpg?s=612x612&w=0&k=20&c=iZ561ZIXOtPYGSzqlKUnLrliorreOYVz1pzu8WJmrnc=);
   background-position:center;
- }
+}
 .info_1im{
  padding:160px 40px;
  background: #00000052;
