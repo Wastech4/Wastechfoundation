@@ -13,6 +13,53 @@
 	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
 	<script src="../js/jquery-2.1.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+		<style>
+			.modal {
+					display: none; 
+					position: fixed; 
+					z-index: 1; 
+					padding-top: 220px; 
+					left: 0;
+					top: 0;
+					width: 100%; 
+					height: 100%; 
+					overflow: auto; 
+					background-color: rgb(0,0,0); 
+					background-color: rgba(0,0,0,0.4); 
+			}
+
+			.modal-content {
+					background-color: #fefefe;
+					margin: auto;
+					padding: 20px;
+					border: 1px solid #888;
+					width: 80%; 
+			}
+
+			.close {
+					color: #aaa;
+					float: right;
+					font-size: 28px;
+					font-weight: bold;
+			}
+
+			.close:hover,
+			.close:focus {
+					color: black;
+					text-decoration: none;
+					cursor: pointer;
+			}
+			tr>th{
+				font-size:12px;
+				text-align: center;
+			}
+			tr>td{
+				font-size: 12px;
+				text-align: center;
+			}
+	</style>
+
+
   </head>
   
 <body>
@@ -61,10 +108,10 @@
 		
 		<div class="collapse navbar-collapse js-navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a class="font_tag active_tab" href="../index.html">Home</a></li>
+				<li><a class="font_tag " href="../index.html">Home</a></li>
 				<li><a class="font_tag" href="../pages/commercial.html">Commercial</a></li>
 				<li><a class="font_tag" href="../pages/industry.html">Industrial</a></li>
-				<li><a class="font_tag" href="../pages/resident.html">Residential</a></li>
+				<li><a class="font_tag active_tab" href="../pages/resident.html">Residential</a></li>
 				<li><a class="font_tag" href="#Service">Services</a></li>
 				<li><a class="font_tag" href="#Contact">Contact Us</a></li>
 				
@@ -79,70 +126,59 @@
 </div>
 	
 <section id="center" class="center_shop clearfix">
- <div class="container">
+ <div class="container-fluid">
   <div class="row">
    <div class="center_shop_1 text-center clearfix">
     <div class="col-sm-12">
-	 <h1 class="mgt">Single Phase Residential Load Data</h1>
+	 <h2 class="mgt">Single Phase Residential Load Data</h2>
 	</div>
    </div>
-   <div class="blog_1 clearfix">
-   <div class="col-sm-9">
-    <div class="blog_1l mgt clearfix">
-			<table class="table  table-bordered">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">First</th>
-						<th scope="col">Last</th>
-						<th scope="col">Handle</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row">1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-				
-				</tbody>
-			</table>
-	</div>
+	 <div class="blog_1 clearfix">
+    <div class="col-sm-9">
+        <div class="blog_1l mgt clearfix">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">S/N</th>
+                        <th scope="col">Load</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Breaker Size</th>
+                        <th scope="col">Cable Size</th>
+                        <th scope="col">Voltage drop</th>
+                    </tr>
+                </thead>
+                <tbody id="loadTableBody">
+                    <!-- Dynamic rows will be added here -->
+                </tbody>
+            </table>
+            <button id="performAnalysis" class="btn btn-success " style="margin-top: 10px;">Perform Analysis</button>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <!-- Scrollable modal -->
+        <button id="openModal" class="btn-primary" style="border-radius:10px;padding:10px 15px">Enter Load</button>
 
-	
-
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Select Load Type and Enter Value:</p>
+                <select id="loadType" class="form-control">
+                    <option value="">Select Load Type</option>
+                    <option value="Lightening circuit">Lightening circuit</option>
+                    <option value="Socket 13Amps circuit">Socket 13Amps circuit</option>
+                    <option value="Water heater">Water heater</option>
+                    <option value="Electric motor (fan)">Electric motor (fan)</option>
+                    <option value="Electric motor (pumping machine)">Electric motor (pumping machine)</option>
+                    <option value="AC Circuit 1">AC Circuit 1</option>
+                    <option value="AC Circuit 2">AC Circuit 2</option>
+                </select>
+                <input type="text" id="loadValue" class="form-control" style="margin-top: 10px; display: none;" placeholder="Enter Value">
+                <button id="saveLoad" class="btn btn-primary" style="margin-top: 10px;">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
    </div>
-   <div class="col-sm-3">
-  <!-- Scrollable modal -->
-	<button id="openModal">Open Modal</button>
-
-	<div id="myModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<p>This is a modal!</p>
-		</div>
-	</div>
-	
-	
    </div>
   </div>
   </div>
@@ -203,35 +239,111 @@
 	 </div>
 	</div>
  </section>
+ <script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+			const modal = document.getElementById("myModal");
+			const btn = document.getElementById("openModal");
+			const span = document.getElementsByClassName("close")[0];
+			const loadType = document.getElementById("loadType");
+			const loadValue = document.getElementById("loadValue");
+			const saveLoad = document.getElementById("saveLoad");
+			const loadTableBody = document.getElementById("loadTableBody");
+			const performAnalysis = document.getElementById("performAnalysis");
+			const voltage = 230;
 
-<script>
-	// Get the modal
-var modal = document.getElementById("myModal");
+			btn.onclick = function() {
+					modal.style.display = "block";
+			}
 
-// Get the button that opens the modal
-var btn = document.getElementById("openModal");
+			span.onclick = function() {
+					modal.style.display = "none";
+			}
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+			window.onclick = function(event) {
+					if (event.target == modal) {
+							modal.style.display = "none";
+					}
+			}
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
+			loadType.onchange = function() {
+					if (loadType.value) {
+							loadValue.style.display = "block";
+					} else {
+							loadValue.style.display = "none";
+					}
+			}
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+			saveLoad.onclick = function() {
+					const type = loadType.value;
+					const value = loadValue.value;
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+					if (type && value) {
+							let loads = JSON.parse(localStorage.getItem('loads')) || [];
+							loads.push({ type, value: parseFloat(value) });
+							localStorage.setItem('loads', JSON.stringify(loads));
 
+							updateTable();
+							modal.style.display = "none";
+					} else {
+							alert("Please select a load type and enter a value.");
+					}
+			}
+
+			function updateTable() {
+					const loads = JSON.parse(localStorage.getItem('loads')) || [];
+					loadTableBody.innerHTML = "";
+
+					loads.forEach((load, index) => {
+							const row = `<tr>
+									<th scope="row">${index + 1}</th>
+									<td>${load.type}</td>
+									<td>${load.value}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+							</tr>`;
+							loadTableBody.innerHTML += row;
+					});
+			}
+
+			performAnalysis.onclick = function() {
+					const loads = JSON.parse(localStorage.getItem('loads')) || [];
+					loads.forEach((load, index) => {
+							const current = load.value / voltage;
+							let breakerSize;
+
+							if (current >= 1 && current <= 4.9) {
+									breakerSize = 5;
+							} else if (current <= 1 && current >= 0) {
+									breakerSize = 5;
+							}else if (current >= 5 && current <= 9.9) {
+								breakerSize = 10;
+						}
+							 else if (current >= 10 && current <= 14.9) {
+									breakerSize = 15;
+							} else if (current >= 15 && current <= 19.9) {
+									breakerSize = 20;
+							} else if (current >= 20 && current <= 24.9) {
+									breakerSize = 25;
+							} else if (current >= 25 && current < 35) {
+									breakerSize = 32;
+							} else {
+									breakerSize = current;
+							}
+
+							const row = document.querySelector(`#loadTableBody tr:nth-child(${index + 1})`);
+							row.cells[3].innerText = breakerSize;
+
+					});
+			}
+
+			// Initial table update
+			updateTable();
+	});
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </body>
 
