@@ -135,8 +135,8 @@
    </div>
 	 <div class="blog_1 clearfix">
     <div class="col-sm-9">
-        <div class="blog_1l mgt clearfix">
-            <table class="table table-bordered">
+        <div class="blog_1l mgt clearfix" style="overflow: scroll;width:100%">
+            <table class="table table-bordered" >
                 <thead>
                     <tr>
                         <th scope="col">S/N</th>
@@ -151,13 +151,15 @@
                     <!-- Dynamic rows will be added here -->
                 </tbody>
             </table>
-            <button id="performAnalysis" class="btn btn-success " style="margin-top: 10px;">Perform Analysis</button>
         </div>
+				<button id="performAnalysis" class="btn btn-success " style="margin-top: 10px;">Perform Analysis</button>
+
     </div>
+		<br>
     <div class="col-sm-3">
         <!-- Scrollable modal -->
         <button id="openModal" class="btn-primary" style="border-radius:10px;padding:10px 15px">Enter Load</button>
-
+				<button onclick="clearDataAndRefresh()" class="btn-danger" style="border-radius:10px;padding:10px 15px">Clear Data</button>
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -318,14 +320,13 @@
 									breakerSize = 5;
 							}else if (current >= 5 && current <= 9.9) {
 								breakerSize = 10;
-						}
-							 else if (current >= 10 && current <= 14.9) {
+							}else if (current >= 10 && current <= 14.9) {
 									breakerSize = 15;
 							} else if (current >= 15 && current <= 19.9) {
 									breakerSize = 20;
 							} else if (current >= 20 && current <= 24.9) {
 									breakerSize = 25;
-							} else if (current >= 25 && current < 35) {
+							} else if (current >= 25 ) {
 									breakerSize = 32;
 							} else {
 									breakerSize = current;
@@ -340,6 +341,11 @@
 			// Initial table update
 			updateTable();
 	});
+
+	function clearDataAndRefresh() {
+		localStorage.clear(); // Clear the local storage
+		location.reload();    // Refresh the page
+}
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
