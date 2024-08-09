@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Electronica</title>
+    <title>Wastech_wire_sizing</title>
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/global.css" rel="stylesheet">
 	<link href="../css/blog.css" rel="stylesheet">
@@ -153,6 +153,7 @@
             </table>
         </div>
 				<button id="performAnalysis" class="btn btn-success " style="margin-top: 10px;">Perform Analysis</button>
+				<button  class="btn btn-warning" onclick="window.print()" style="margin-top: 10px;">Print Data</button>
 
     </div>
 		<br>
@@ -168,6 +169,7 @@
                     <option value="">Select Load Type</option>
                     <option value="Lightening circuit">Lightening circuit</option>
                     <option value="Socket 13Amps circuit">Socket 13Amps circuit</option>
+                    <option value="Socket 15Amps circuit">Socket 15Amps circuit</option>
                     <option value="Water heater">Water heater</option>
                     <option value="Electric motor (fan)">Electric motor (fan)</option>
                     <option value="Electric motor (pumping machine)">Electric motor (pumping machine)</option>
@@ -252,6 +254,9 @@
 			const loadTableBody = document.getElementById("loadTableBody");
 			const performAnalysis = document.getElementById("performAnalysis");
 			const voltage = 230;
+			const powerFactor = 0.9;
+		//		const acMinimumBreakerSize = 20;
+		//	const whMinimumBreakerSize = 20;
 
 			btn.onclick = function() {
 					modal.style.display = "block";
@@ -309,37 +314,82 @@
 			}
 
 			performAnalysis.onclick = function() {
-					const loads = JSON.parse(localStorage.getItem('loads')) || [];
-					loads.forEach((load, index) => {
-							const current = load.value / voltage;
-							let breakerSize;
+				const loads = JSON.parse(localStorage.getItem('loads')) || [];
+				const Ca = 1.03;
+				const Ci = 0.7;
+		
+				loads.forEach((load, index) => {
+						const current = load.value / (voltage * powerFactor) ;
+						
 
-							if (current >= 1 && current <= 4.9) {
-									breakerSize = 5;
-							} else if (current <= 1 && current >= 0) {
-									breakerSize = 5;
-							}else if (current >= 5 && current <= 9.9) {
-								breakerSize = 10;
-							}else if (current >= 10 && current <= 14.9) {
-									breakerSize = 15;
-							} else if (current >= 15 && current <= 19.9) {
-									breakerSize = 20;
-							} else if (current >= 20 && current <= 24.9) {
-									breakerSize = 25;
-							} else if (current >= 25 ) {
-									breakerSize = 32;
-							} else {
-									breakerSize = current;
-							}
+						if (load.type.includes("AC Circuit")) {
+						current * 1.25 == current; 
+					}
+		//			if (load.type.includes("Water heater")) {
+		//				current * 1.25 == current; 
+		//		}
+						
+						
+						console.log(`Load ${index + 1}: ${load.type}, Power: ${load.value}W, Current: ${current.toFixed(2)}A`);
+						
+						
+						let breakerSize;
+		
+					  if (current <= 5) {
+							breakerSize = 5;
+					} else if (current <= 10) {
+							breakerSize = 10;
+					} else if (current <= 15) {
+							breakerSize = 15;
+					} else if (current <= 20) {
+							breakerSize = 20;
+					} else if (current <= 25) {
+							breakerSize = 25;
+					} else {
+							breakerSize = 32; 
+					}
 
-							const row = document.querySelector(`#loadTableBody tr:nth-child(${index + 1})`);
-							row.cells[3].innerText = breakerSize;
+					
+						  // Ensure AC circuits have a minimum breaker size
+					//		if (load.type.includes("AC Circuit") && breakerSize < acMinimumBreakerSize && load.value >1000) {
+						//		breakerSize = acMinimumBreakerSize;
+					//	}else{
+					//		breakerSize = breakerSize;
 
-					});
-			}
+					//	}
+					//	if (load.type.includes("Water heater") && breakerSize < whMinimumBreakerSize) {
+					//		breakerSize = acMinimumBreakerSize;
+				//	}
+		
+		
+						const cableSize = breakerSize / (Ca * Ci);
+						let cableSizeMM;
+		
+						if (cableSize >= 0 && cableSize <= 11) {
+								cableSizeMM = "1mm";
+						} else if (cableSize > 11 && cableSize <= 15) {
+								cableSizeMM = "1.5mm";
+						} else if (cableSize > 15 && cableSize <= 25) {
+								cableSizeMM = "2.5mm";
+						} else if (cableSize > 25) {
+								cableSizeMM = "4mm";
+						}
 
-			// Initial table update
-			updateTable();
+
+						const row = document.querySelector(`#loadTableBody tr:nth-child(${index + 1})`);
+						row.cells[3].innerText = breakerSize;
+						row.cells[4].innerText = cableSizeMM;
+
+	
+
+		
+				});
+		}
+
+		
+		// Initial table update
+		updateTable();
+		
 	});
 
 	function clearDataAndRefresh() {
